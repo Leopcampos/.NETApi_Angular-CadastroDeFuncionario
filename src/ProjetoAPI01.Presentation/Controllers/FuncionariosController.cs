@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Entities;
 using ProjettoAPI01.Presentation.Models;
@@ -16,6 +15,13 @@ namespace ProjettoAPI01.Presentation.Controllers
         {
             try
             {
+                //Verificar se o CPF informado já está cadastrado
+                if(funcionarioRepository.ObterPorCpf(model.Cpf) != null)
+                {
+                    //HTTP 400 - BAD REQUEST
+                    return StatusCode(400, "");
+                }
+
                 //criando um objeto funcionario (entidade)
                 var funcionario = new Funcionario();
 
@@ -31,7 +37,8 @@ namespace ProjettoAPI01.Presentation.Controllers
             }
             catch (Exception e)
             {
-                //retornando um status de erro de servidor (HTTP 500)
+                //retornando um status de erro de servidor
+                //(HTTP 500 - INTERNAL SERVER ERROR)
                 return StatusCode(500, e.Message);
             }
         }

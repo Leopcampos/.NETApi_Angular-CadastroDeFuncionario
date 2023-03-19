@@ -8,7 +8,7 @@ using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Repositories;
 using System;
 
-namespace ProjettoAPI01.Presentation
+namespace ProjetoAPI01.Presentation
 {
     public class Startup
     {
@@ -30,7 +30,8 @@ namespace ProjettoAPI01.Presentation
             var connectionstring = Configuration.GetConnectionString("ProjetoAPI01");
 
             //configurando o repositorio..
-            services.AddTransient<IFuncionarioRepository>(map => new FuncionarioRepository(connectionstring));
+            services.AddTransient<IFuncionarioRepository>
+                (map => new FuncionarioRepository(connectionstring));
 
             #endregion
 
@@ -71,11 +72,7 @@ namespace ProjettoAPI01.Presentation
             #region Configuração do Swagger
 
             app.UseSwagger();
-
-            app.UseSwaggerUI(s =>
-            {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Projeto");
-            });
+            app.UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "Projeto"); });
 
             #endregion
 
