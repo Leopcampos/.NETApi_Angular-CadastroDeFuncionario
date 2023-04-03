@@ -21,6 +21,9 @@ var connectionstring = builder.Configuration.GetConnectionString("ProjetoAPI01")
 builder.Services.AddTransient<IFuncionarioRepository>
     (map => new FuncionarioRepository(connectionstring));
 
+builder.Services.AddTransient<IDependenteRepository>
+    (map => new DependenteRepository(connectionstring));
+
 #endregion
 
 #region Configuração do Swagger

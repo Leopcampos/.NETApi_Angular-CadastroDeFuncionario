@@ -6,22 +6,20 @@ using System.Threading.Tasks;
 
 namespace ProjetoAPI01.Repository.Entities
 {
-    public class Funcionario
+    public class Dependente
     {
-        #region Propriedades (Campos / Atributos)
+        #region Propriedades (Campos)
 
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public string Cpf { get; set; }
-        public string Matricula { get; set; }
-        public DateTime DataAdmissao { get; set; }
-        public decimal Salario { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public Guid FuncionarioId { get; set; }
 
         #endregion
 
         #region Relacionamentos (Associações)
 
-        public List<Dependente> Dependentes { get; set; }
+        public Funcionario Funcionario { get; set; }
 
         #endregion
     }
