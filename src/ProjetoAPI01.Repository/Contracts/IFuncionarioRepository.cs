@@ -1,7 +1,4 @@
 ﻿using ProjetoAPI01.Repository.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProjetoAPI01.Repository.Contracts
 {

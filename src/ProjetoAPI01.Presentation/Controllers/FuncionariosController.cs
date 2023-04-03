@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using ProjetoAPI01.Presentation.Models;
 using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Entities;
-using ProjettoAPI01.Presentation.Models;
-using System;
 
-namespace ProjettoAPI01.Presentation.Controllers
+namespace ProjetoAPI01.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +16,7 @@ namespace ProjettoAPI01.Presentation.Controllers
             try
             {
                 //Verificar se o CPF informado já está cadastrado
-                if(funcionarioRepository.ObterPorCpf(model.Cpf) != null)
+                if (funcionarioRepository.ObterPorCpf(model.Cpf) != null)
                 {
                     //HTTP 400 - BAD REQUEST
                     return StatusCode(400, "");

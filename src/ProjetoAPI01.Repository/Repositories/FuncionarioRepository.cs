@@ -1,10 +1,7 @@
 ﻿using Dapper;
 using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace ProjetoAPI01.Repository.Repositories
 {

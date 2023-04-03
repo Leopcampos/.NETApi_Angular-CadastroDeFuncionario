@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProjettoAPI01.Presentation.Models
+namespace ProjetoAPI01.Presentation.Models
 {
     public class FuncionarioCadastroModel
     {
