@@ -20,7 +20,7 @@ namespace ProjetoAPI01.Repository.Repositories
 
         public void Inserir(Dependente dependente)
         {
-            var query = @"INSERT INTO DEPENDETE (ID, NOME, DATANASCIMENTO, FUNCIONARIOID)
+            var query = @"INSERT INTO DEPENDENTE (ID, NOME, DATANASCIMENTO, FUNCIONARIOID)
                         VALUES (@ID, @NOME, @DATANASCIMENTO, @FUNCIONARIOID)";
 
             using var connection = new SqlConnection(connectionstring);
@@ -48,18 +48,41 @@ namespace ProjetoAPI01.Repository.Repositories
 
         public List<Dependente> ObterTodos()
         {
-            var query = "SELECT * FROM DEPENDENTE ORDER BY NOME";
+            var query = @"SELECT * FROM DEPENDENTE D 
+                            INNER JOIN FUNCIONARIO F
+                            ON F.ID = D.FUNCIONARIOID
+                            ORDER BY D.NOME";
 
             using var connection = new SqlConnection(connectionstring);
-            return connection.Query<Dependente>(query).ToList();
+
+            return connection.Query(query,
+                (Dependente d, Funcionario f) =>
+                {
+                    d.Funcionario = f; //associando o dependente ao funcionário
+                    return d; //retornando o dependente
+                },
+                splitOn: "FuncionarioId" //atributo chave estrangeira
+                ).ToList();
         }
 
         public Dependente ObterPorId(Guid id)
         {
-            var query = "SELECT * FROM DEPENDENTE WHERE ID = @ID";
+            var query = @"SELECT * FROM DEPENDENTE D
+                            INNER JOIN FUNCIONARIO F
+                            ON F.ID = D.FUNCIONARIOID
+                            WHERE D.ID = @Id";
 
             using var connection = new SqlConnection(connectionstring);
-            return connection.Query<Dependente>(query, new { id }).FirstOrDefault();
+
+            return connection.Query(query,
+               (Dependente d, Funcionario f) =>
+               {
+                   d.Funcionario = f; //associando o dependente ao funcionário
+                   return d; //retornando o dependente
+               },
+               new { id }, //parametro where da consulta
+               splitOn: "FuncionarioId" //atributo chave estrangeira
+               ).FirstOrDefault();
         }
     }
 }

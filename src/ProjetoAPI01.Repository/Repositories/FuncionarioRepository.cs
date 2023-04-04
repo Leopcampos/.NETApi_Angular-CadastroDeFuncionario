@@ -72,5 +72,13 @@ namespace ProjetoAPI01.Repository.Repositories
             using var connection = new SqlConnection(connectionstring);
             return connection.Query<Funcionario>(query, new { id }).FirstOrDefault();
         }
+
+        public List<Dependente> ObterDependentes(Guid id)
+        {
+            var query = "SELECT * FROM DEPENDENTE WHERE FUNCIONARIOID = @ID";
+
+            using var connection = new SqlConnection(connectionstring);
+            return connection.Query<Dependente>(query, new { id }).ToList();
+        }
     }
 }

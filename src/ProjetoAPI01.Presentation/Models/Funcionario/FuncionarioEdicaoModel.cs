@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjetoAPI01.Repository.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace ProjetoAPI01.Presentation.Models
+namespace ProjetoAPI01.Presentation.Models.Funcionario
 {
-    public class FuncionarioCadastroModel
+    public class FuncionarioEdicaoModel
     {
-        [StringLength(150, MinimumLength = 6, ErrorMessage = "Por favor, informe no mínimo {2} e no máximo {1} caracteres.")]
+        [Required(ErrorMessage = "Por favor, informe o id do funcionário.")]
+        public Guid Id { get; set; }
+
+        [StringLength(150, MinimumLength = 6, ErrorMessage = "Por favor, informe no mínimo {2} e no máximo {1} caracteres")]
         [Required(ErrorMessage = "Por favor, informe o nome do funcionário.")]
         public string Nome { get; set; }
-
-        [RegularExpression("^[0-9]{11}$", ErrorMessage = "Por favor, informe um cpf válido.")]
-        [Required(ErrorMessage = "Por favor, informe o cpf do funcionário.")]
-        public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe a matrícula do funcionário.")]
         public string Matricula { get; set; }

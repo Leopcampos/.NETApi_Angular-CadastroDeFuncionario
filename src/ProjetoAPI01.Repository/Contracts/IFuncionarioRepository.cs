@@ -15,6 +15,8 @@ namespace ProjetoAPI01.Repository.Contracts
         Funcionario ObterPorCpf(string cpf);
         Funcionario ObterPorId(Guid id);
 
+        List<Dependente> ObterDependentes(Guid id);
+
         #endregion
     }
 }
