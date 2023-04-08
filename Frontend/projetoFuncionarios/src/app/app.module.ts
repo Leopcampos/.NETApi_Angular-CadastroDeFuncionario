@@ -10,6 +10,12 @@ import { ConsultaDependentesComponent } from './consulta-dependentes/consulta-de
 //importando a biblioteca para mapeamento de de rotas no Angular
 import { RouterModule, Routes } from '@angular/router';
 
+//importando a biblioteca para acesso à API 
+import { HttpClientModule } from '@angular/common/http';
+
+//importando a biblioteca para desenvolvimento de formulários
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 //mapear as rotas de cada componente
 const appRoutes: Routes = [
   {path: "cadastro-funcionarios", component: CadastroFuncionariosComponent},
@@ -29,7 +35,14 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     //Registrando as rotas do projeto
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+
+    //Registrando o componente para requisições à API
+    HttpClientModule,
+
+    //Registrando o componente de desenvolvimento de formulários
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
