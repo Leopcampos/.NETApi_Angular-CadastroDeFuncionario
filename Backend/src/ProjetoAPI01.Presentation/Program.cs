@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Repositories;
@@ -47,6 +46,20 @@ builder.Services.AddSwaggerGen(
 
 #endregion
 
+#region CORS - Cross Origin Resource Sharing
+
+builder.Services.AddCors(
+s => s.AddPolicy("DefaultPolicy",
+builder =>
+{
+    builder.AllowAnyOrigin()//clientes de qualquer origem
+    .AllowAnyMethod()  //qualquer método (POST, PUT, DELETE, GET, etc)
+    .AllowAnyHeader(); //qualquer cabeçalho
+})
+);
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,6 +68,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "Projeto"); });
 }
+
+#region CORS - Cross Origin Resource Sharing
+
+app.UseCors("DefaultPolicy");
+
+#endregion
 
 app.UseAuthorization();
 
