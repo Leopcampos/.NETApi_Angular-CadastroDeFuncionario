@@ -1,34 +1,59 @@
+<div class="alert alert-success alert-dismissible fade show" [hidden]="!mensagemSucesso" role="alert">
+    <strong>{{mensagemSucesso}}</strong>
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" [hidden]="!mensagemErro" role="alert">
+    <strong>{{mensagemErro}}</strong>
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
 <h5>Cadastro de Funcionários</h5>
-<br>
+<br />
 
 <div class="row">
     <div class="col-md-4">
 
-        <form #formCadastro="ngForm" (submit)="cadastrarFuncionario(formCadastro)">
+           <form #formCadastro="ngForm" (submit)="cadastrarFuncionario(formCadastro)">
 
-            <label>Nome do Funcionário:</label> 
-            <input type="text" class="form-control" placeholder="EX: João da Silva" name="nome" ngModel/>
-            <br>
+                  <label>Nome do Funcionário:</label>
+                  <input type="text" class="form-control" placeholder="Ex: João da Silva" name="nome" ngModel />
+                  <div *ngFor="let item of errosNome" class="text-danger">
+                         {{item}}
+                  </div>
+                  <br />
 
-            <label>CPF:</label>
-            <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ngModel/>
-            <br>
+                  <label>CPF:</label>
+                  <input type="text" class="form-control" placeholder="000.000.000-00" name="cpf" ngModel />
+                  <div *ngFor="let item of errosCpf" class="text-danger">
+                         {{item}}
+                  </div>
+                  <br />
 
-            <label>Matrícula:</label>
-            <input type="text" class="form-control" placeholder="0000-000" name="matricula" ngModel/>
-            <br />
+                  <label>Matrícula:</label>
+                  <input type="text" class="form-control" placeholder="0000-000" name="matricula" ngModel />
+                  <div *ngFor="let item of errosMatricula" class="text-danger">
+                         {{item}}
+                  </div>
+                  <br />
 
-            <label>Data de Admissão:</label>
-            <input type="date" class="form-control" name="dataAdmissao" ngModel/>
-            <br />
+                  <label>Data de Admissão:</label>
+                  <input type="date" class="form-control" name="dataAdmissao" ngModel />
+                  <div *ngFor="let item of errosDataAdmissao" class="text-danger">
+                         {{item}}
+                  </div>
+                  <br />
 
-            <label>Salário:</label>
-            <input type="text" class="form-control" placeholder="0.00" name="salario" ngModel/>
-            <br />
+                  <label>Salário:</label>
+                  <input type="text" class="form-control" placeholder="0.00" name="salario" ngModel />
+                  <div *ngFor="let item of errosSalario" class="text-danger">
+                         {{item}}
+                  </div>
+                  <br />
 
-            <input type="submit" value="Cadastrar Funcionário" class="btn btn-success" />
+                  <input type="submit" value="Cadastrar Funcionário" class="btn btn-success" />
 
-        </form>
+           </form>
+
     </div>
-
 </div>

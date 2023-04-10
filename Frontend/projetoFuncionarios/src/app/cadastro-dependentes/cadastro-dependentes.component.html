@@ -4,18 +4,18 @@
 <div class="row">
     <div class="col-md-4">
 
-        <form>
+        <form #formCadastro="ngForm" (submit)="cadastrarDependente(formCadastro)">
 
             <label>Nome do Dependente:</label>
-            <input type="text" class="form-control" placeholder="EX: João da Silva" />
+            <input type="text" class="form-control" placeholder="EX: João da Silva" name="nome" ngModel />
             <br>
 
             <label>Data de Nascimento:</label>
-            <input type="date" class="form-control" />
+            <input type="date" class="form-control" name="dataNascimento" ngModel />
             <br />
 
             <label>Selecione o Funcionário:</label>
-            <select class="form-control">
+            <select class="form-control" name="funcionarioId" ngModel>
                 <option value="">Escolha uma opção</option>
             </select>
             <br />

@@ -19,8 +19,8 @@ namespace ProjetoAPI01.Presentation.Controllers
 
                 dependente.Id = Guid.NewGuid();
                 dependente.Nome = model.Nome;
-                dependente.DataNascimento = model.DataNascimento;
-                dependente.FuncionarioId = model.FuncionarioId;
+                dependente.DataNascimento = DateTime.Parse(model.DataNascimento);
+                dependente.FuncionarioId = Guid.Parse(model.FuncionarioId);
                 dependenteRepository.Inserir(dependente);
                 return Ok("Dependente cadastrado com sucesso.");
             }
@@ -36,13 +36,13 @@ namespace ProjetoAPI01.Presentation.Controllers
             try
             {
                 //verificar se o dependente informado existe no banco de dados..
-                var dependente = dependenteRepository.ObterPorId(model.Id);
+                var dependente = dependenteRepository.ObterPorId(Guid.Parse(model.Id));
 
                 if (dependente != null)
                 {
                     dependente.Nome = model.Nome;
-                    dependente.DataNascimento = model.DataNascimento;
-                    dependente.FuncionarioId = model.FuncionarioId;
+                    dependente.DataNascimento = DateTime.Parse(model.DataNascimento);
+                    dependente.FuncionarioId = Guid.Parse(model.FuncionarioId);
                     dependenteRepository.Alterar(dependente);
                     return Ok("Dependente atualizado com sucesso.");
                 }
