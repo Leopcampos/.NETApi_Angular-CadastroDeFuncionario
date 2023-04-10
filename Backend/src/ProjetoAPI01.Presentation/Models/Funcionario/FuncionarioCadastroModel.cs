@@ -16,9 +16,9 @@ namespace ProjetoAPI01.Presentation.Models.Funcionario
         public string Matricula { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe a data de admissão do funcionário.")]
-        public DateTime DataAdmissao { get; set; }
+        public string DataAdmissao { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe o salário do funcionário.")]
-        public decimal Salario { get; set; }
+        public string Salario { get; set; }
     }
 }

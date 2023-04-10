@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoAPI01.Presentation.Models.Dependente;
 using ProjetoAPI01.Presentation.Models.Funcionario;
 using ProjetoAPI01.Repository.Contracts;
 using ProjetoAPI01.Repository.Entities;
-using System.Reflection;
 
 namespace ProjetoAPI01.Presentation.Controllers
 {
@@ -20,8 +18,8 @@ namespace ProjetoAPI01.Presentation.Controllers
                 //Verificar se o CPF informado já está cadastrado
                 if (funcionarioRepository.ObterPorCpf(model.Cpf) != null)
                 {
-                    //HTTP 400 - BAD REQUEST
-                    return StatusCode(400, "");
+                    //HTTP 403 - FORBIDDEN
+                    return StatusCode(403, "O CPF informado já encontra-se cadastrado.");
                 }
 
                 //criando um objeto funcionario (entidade)
@@ -31,8 +29,8 @@ namespace ProjetoAPI01.Presentation.Controllers
                 funcionario.Nome = model.Nome;
                 funcionario.Cpf = model.Cpf;
                 funcionario.Matricula = model.Matricula;
-                funcionario.DataAdmissao = model.DataAdmissao;
-                funcionario.Salario = model.Salario;
+                funcionario.DataAdmissao = DateTime.Parse(model.DataAdmissao);
+                funcionario.Salario = decimal.Parse(model.Salario);
                 funcionarioRepository.Inserir(funcionario);
 
                 return Ok("Funcionário cadastrado com sucesso.");
@@ -51,15 +49,15 @@ namespace ProjetoAPI01.Presentation.Controllers
             try
             {
                 //Buscando o funcionário no banco de dados através do ID
-                var funcionario = funcionarioRepository.ObterPorId(model.Id);
+                var funcionario = funcionarioRepository.ObterPorId(Guid.Parse(model.Id));
 
                 //Verificando se o funcionário foi encontrado
                 if (funcionario != null)
                 {
                     funcionario.Nome = model.Nome;
                     funcionario.Matricula = model.Matricula;
-                    funcionario.Salario = model.Salario;
-                    funcionario.DataAdmissao = model.DataAdmissao;
+                    funcionario.Salario = decimal.Parse(model.Salario);
+                    funcionario.DataAdmissao = DateTime.Parse(model.DataAdmissao);
 
                     funcionarioRepository.Alterar(funcionario);
                     return Ok("Funcionário atualizado com sucesso.");

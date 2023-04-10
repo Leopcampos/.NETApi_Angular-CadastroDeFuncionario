@@ -6,7 +6,7 @@ namespace ProjetoAPI01.Presentation.Models.Funcionario
     public class FuncionarioEdicaoModel
     {
         [Required(ErrorMessage = "Por favor, informe o id do funcionário.")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [StringLength(150, MinimumLength = 6, ErrorMessage = "Por favor, informe no mínimo {2} e no máximo {1} caracteres")]
         [Required(ErrorMessage = "Por favor, informe o nome do funcionário.")]
@@ -16,9 +16,9 @@ namespace ProjetoAPI01.Presentation.Models.Funcionario
         public string Matricula { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe a data de admissão do funcionário.")]
-        public DateTime DataAdmissao { get; set; }
+        public string DataAdmissao { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe o salário do funcionário.")]
-        public decimal Salario { get; set; }
+        public string Salario { get; set; }
     }
 }
