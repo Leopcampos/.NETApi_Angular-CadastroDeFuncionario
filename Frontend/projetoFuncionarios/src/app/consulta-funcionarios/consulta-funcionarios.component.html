@@ -9,18 +9,20 @@
             <th>Matrícula</th>
             <th>Salário</th>
             <th>Data de Admissão</th>
-            <th>Dependentes</th>
+            <th colspan="2">Dependentes</th>
             <th width="180">Operações</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let item of listagemFuncionarios">
+            <td>{{item.nome | uppercase}}</td>
+            <td>{{item.cpf}}</td>
+            <td>{{item.matricula}}</td>
+            <td>{{item.salario | currency : 'R$ '}}</td>
+            <td>{{item.dataAdmissao | date : 'dd/MM/yyyy'}}</td>
+            <td width="40">{{item.dependentes.length}}</td>
+            <td width="160"> <button class="btn btn-secondary btn-sm" [disabled]="item.dependentes.length == 0">
+                    Ver Dependentes </button> </td>
             <td>
                 <button class="btn btn-primary btn-sm">Atualizar</button>
                 &nbsp;
@@ -29,7 +31,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="7"> Quantidade de registros: 0 </td>
+            <td colspan="8"> Quantidade de registros: {{listagemFuncionarios.length}} </td>
         </tr>
     </tfoot>
 </table>

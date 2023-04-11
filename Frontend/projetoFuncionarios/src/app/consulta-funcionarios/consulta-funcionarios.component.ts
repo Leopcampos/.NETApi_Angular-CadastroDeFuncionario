@@ -7,19 +7,31 @@ import { Component } from '@angular/core';
   templateUrl: './consulta-funcionarios.component.html',
   styleUrls: ['./consulta-funcionarios.component.css']
 })
+
 export class ConsultaFuncionariosComponent {
+
+  //atributos
   listagemFuncionarios: any[] = [];
 
-  constructor(private httpClient: HttpClient) {}
+  //inicializando o componente HttpClient
+  constructor(private httpClient: HttpClient) { }
 
+  //função executada quando o componente é carregado 
+  ngOnInit(): void {
+    this.consultarFuncionarios();
+  }
+
+  //função executada para consultar os funcionarios
   consultarFuncionarios(): void {
+
+    //enviando uma chamada GET para a api
     this.httpClient.get<any[]>(environment.apiUrl + "/funcionarios")
       .subscribe(
-        (data) => {
+        (data: any[]) => {
           this.listagemFuncionarios = data;
         },
-        (error) => {
-          console.log(error);
+        e => {
+          console.log(e);
         }
       );
   }
