@@ -89,8 +89,17 @@ namespace ProjetoAPI01.Presentation.Controllers
                 //Verificando se o funcionário foi encontrado
                 if (funcionario != null)
                 {
-                    funcionarioRepository.Excluir(funcionario);
-                    return Ok("Funcionário excluído com sucesso.");
+                    //verificar se o funcionario não possui dependentes..
+                    if (funcionarioRepository
+                    .ObterDependentes(funcionario.Id).Count == 0)
+                    {
+                        funcionarioRepository.Excluir(funcionario);
+                        return Ok("Funcionário excluído com sucesso.");
+                    }
+                    else
+                    {
+                        return StatusCode(403, "Não é permitido excluir um funcionário que possua dependentes.");
+                    }
                 }
                 else
                 {
