@@ -1,3 +1,13 @@
+<div class="alert alert-success alert-dismissible fade show" [hidden]="!mensagemSucesso" role="alert">
+    <strong>{{mensagemSucesso}}</strong>
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" [hidden]="!mensagemErro" role="alert">
+    <strong>{{mensagemErro}}</strong>
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
 <h5>Consulta de Funcionários</h5>
 <br />
 
@@ -21,17 +31,132 @@
             <td>{{item.salario | currency : 'R$ '}}</td>
             <td>{{item.dataAdmissao | date : 'dd/MM/yyyy'}}</td>
             <td width="40">{{item.dependentes.length}}</td>
-            <td width="160"> <button class="btn btn-secondary btn-sm" [disabled]="item.dependentes.length == 0">
-                    Ver Dependentes </button> </td>
+            <td width="160">
+                <button class="btn btn-secondary btn-sm" [disabled]="item.dependentes.length == 0"
+                    data-bs-target="#modal_dependentes" data-bs-toggle="modal" (click)="exibirDetalhes(item)">
+                    Ver Dependentes
+                </button>
+            </td>
             <td>
-                <button class="btn btn-primary btn-sm">Atualizar</button>
+                <button class="btn btn-primary btn-sm" data-bs-target="#modal_edicao" data-bs-toggle="modal">
+                    Atualizar
+                </button>
                 &nbsp;
-                <button class="btn btn-danger btn-sm"> Excluir </button>
+                <button class="btn btn-danger btn-sm" (click)="excluirFuncionario(item)">
+                    Excluir
+                </button>
+            </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="8"> Quantidade de registros: {{listagemFuncionarios.length}} </td>
+            <td colspan="8">
+                Quantidade de registros: {{listagemFuncionarios.length}}
+            </td>
         </tr>
     </tfoot>
 </table>
+
+<!-- Janela modal para exibir os dependentes do funcionário -->
+<div id="modal_dependentes" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary">
+                <h5 class="text-title text-white">Dependentes do Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="funcionario">
+
+                    <div>
+                        <strong>{{funcionario.nome | uppercase}}</strong>
+                    </div>
+                    <div>
+                        CPF: {{funcionario.cpf}}
+                    </div>
+                    <div>
+                        Matrícula: {{funcionario.matricula}}
+                    </div>
+                    <div>
+                        Salário: {{funcionario.salario | currency : 'R$ '}}
+                    </div>
+                    <div>
+                        Data de Admissão: {{funcionario.dataAdmissao | date : 'dd/MM/yyyy'}}
+                    </div>
+
+                    <br />
+
+                    <table class="table table-bordered table-hover table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Nome do Dependente</th>
+                                <th>Data de Nascimento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of funcionario.dependentes">
+                                <td>{{item.nome | uppercase}}</td>
+                                <td>{{item.dataNascimento | date : 'dd/MM/yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    Quantidade de dependentes: {{funcionario.dependentes.length}}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Fechar Janela
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Janela modal para edição do funcionário -->
+<div id="modal_edicao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="text-white text-title">Atualizar Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+
+                    <!-- campo oculto -->
+                    <input type="hidden" name="id" ngModel/>
+
+                    <label>Nome do Funcionário:</label>
+                    <input type="text" class="form-control" placeholder="Ex: João da Silva" name="nome" ngModel />
+                    <br />
+
+                    <label>Matrícula:</label>
+                    <input type="text" class="form-control" placeholder="0000-000" name="matricula" ngModel />
+                    <br />
+
+                    <label>Data de Admissão:</label>
+                    <input type="date" class="form-control" name="dataAdmissao" ngModel />
+                    <br />
+
+                    <label>Salário:</label>
+                    <input type="text" class="form-control" placeholder="0.00" name="salario" ngModel />
+                    <br />
+
+                    <input type="submit" value="Atualizar Funcionário" class="btn btn-success" />
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
