@@ -1,5 +1,11 @@
+<div class="alert alert-secondary alert-dismissible fade show" role="alert"
+    [hidden]="!mensagem">
+    <strong>{{mensagem}}</strong>
+    <button type="button" class="btn-close" (click)="limparMensagens()" aria-label="Close"></button>
+</div>
+
 <h5>Consulta de Dependentes</h5>
-<br />
+<br/>
 
 <table class="table table-bordered table-light table-stripped table-hover">
     <thead>
@@ -11,20 +17,67 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let item of listagemDependentes">
+            <td>{{item.nome | uppercase}}</td>
+            <td>{{item.dataNascimento | date : 'dd/MM/yyyy'}}</td>
             <td>
-                <button class="btn btn-primary btn-sm"> Atualizar </button>
+                {{item.funcionario.nome | uppercase}} (CPF: {{item.funcionario.cpf}})
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm"
+                    data-bs-target="#janela_edicao"
+                    data-bs-toggle="modal">
+                    Atualizar
+                </button>
                 &nbsp;
-                <button class="btn btn-danger btn-sm"> Excluir </button>
+                <button class="btn btn-danger btn-sm"
+                    (click)="excluirDependente(item.id)">
+                    Excluir
+                </button>
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="4"> Quantidade de registros: 0 </td>
+            <td colspan="4">
+                Quantidade de registros: {{listagemDependentes.length}}
+            </td>
         </tr>
     </tfoot>
 </table>
+
+<!-- Janela modal para edição de dependente -->
+<div id="janela_edicao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="text-title text-white">Atualizar Dependente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+
+                    <label>Nome do dependente:</label>
+                    <input type="text" class="form-control"/>
+                    <br/>
+
+                    <label>Data de Nascimento:</label>
+                    <input type="date" class="form-control"/>
+                    <br/>
+
+                    <label>Selecione o Funcionário:</label>
+                    <select class="form-select">
+                        <option value="">Escolha uma opção</option>
+                    </select>
+                    <br/>
+
+                    <input type="submit" value="Atualizar Dependente"
+                           class="btn btn-success"/>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

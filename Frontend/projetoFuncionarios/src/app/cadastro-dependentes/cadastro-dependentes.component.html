@@ -1,5 +1,11 @@
+<div class="alert alert-success alert-dismissible fade show" role="alert"
+    [hidden]="!mensagem">
+    <strong>{{mensagem}}</strong>
+    <button type="button" class="btn-close" (click)="limparMensagens()" aria-label="Close"></button>
+</div>
+
 <h5>Cadastro de Dependentes</h5>
-<br>
+<br />
 
 <div class="row">
     <div class="col-md-4">
@@ -7,22 +13,36 @@
         <form #formCadastro="ngForm" (submit)="cadastrarDependente(formCadastro)">
 
             <label>Nome do Dependente:</label>
-            <input type="text" class="form-control" placeholder="EX: João da Silva" name="nome" ngModel />
-            <br>
+            <input type="text" class="form-control" name="nome" ngModel placeholder="Ex: João da Silva" />
+            <div class="text-danger" *ngFor="let item of errosNome">
+                {{item}}
+            </div>
+            <br />
 
             <label>Data de Nascimento:</label>
             <input type="date" class="form-control" name="dataNascimento" ngModel />
+            <div class="text-danger" *ngFor="let item of errosDataNascimento">
+                {{item}}
+            </div>
             <br />
 
             <label>Selecione o Funcionário:</label>
-            <select class="form-control" name="funcionarioId" ngModel>
+            <select class="form-select" name="funcionarioId" ngModel>
                 <option value="">Escolha uma opção</option>
+
+                <option *ngFor="let item of listagemFuncionarios" value="{{item.id}}">
+                    {{item.nome | uppercase}}
+                </option>
+
             </select>
+            <div class="text-danger" *ngFor="let item of errosFuncionarioId">
+                {{item}}
+            </div>
             <br />
 
-            <input type="submit" value="Cadastrar Funcionário" class="btn btn-success" />
+            <input type="submit" value="Cadastrar Dependente" class="btn btn-success" />
 
         </form>
-    </div>
 
+    </div>
 </div>
